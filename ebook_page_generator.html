@@ -1,0 +1,618 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #e0e7ff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    --border-color: #e5e7eb;
+    --border-light: #f0f0f0;
+    --success-color: #10b981;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+
+  select,
+  input[type=text],
+  input[type=number] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+  }
+
+  select:focus,
+  input[type=text]:focus,
+  input[type=number]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: var(--bg-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    resize: vertical;
+    min-height: 120px;
+    transition: all 0.2s ease;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: var(--bg-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary-color);
+  }
+
+  .btn-copy {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+
+  .btn-copy:hover {
+    background: white;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 6px 6px 6px 0;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    background: white;
+    transition: all 0.2s ease;
+  }
+
+  .pill:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+    color: var(--primary-dark);
+  }
+
+  .pill.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+  }
+
+  .output-box {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 28px;
+    margin-top: 24px;
+    position: relative;
+    box-shadow: var(--shadow-md);
+  }
+
+  .output-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    max-height: 500px;
+    overflow-y: auto;
+    background: var(--bg-primary);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .badge-blue {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary-dark);
+  }
+
+  .badge-green {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 20px 0;
+  }
+
+  .hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 12px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3);
+  }
+
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .copied-msg {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    font-size: 14px;
+    color: white;
+    background: var(--success-color);
+    padding: 12px 20px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    box-shadow: var(--shadow-lg);
+    font-weight: 500;
+    z-index: 1000;
+  }
+
+  .copied-msg.show {
+    opacity: 1;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+</style>
+
+<div class="app">
+
+  <div class="card">
+    <h3>✨ Generador de Páginas para eBook</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-top: 8px;">Completa los campos con el contenido de tu capítulo y se generará un prompt técnico listo para usar en Claude, ChatGPT o Gemini.</p>
+  </div>
+
+  <div class="card">
+    <h3>📝 Contenido del Capítulo</h3>
+
+    <div style="margin-bottom: 18px;">
+      <label class="section-label">Título del capítulo</label>
+      <input type="text" id="chapter-title" placeholder="Ej: Técnica #1 — La respiración 4-7-8" />
+    </div>
+
+    <div style="margin-bottom: 18px;">
+      <label class="section-label">Número / nombre del eBook</label>
+      <input type="text" id="ebook-title" placeholder="Ej: Adiós Ansiedad" />
+    </div>
+
+    <div style="margin-bottom: 18px;">
+      <label class="section-label">Texto principal del capítulo</label>
+      <textarea id="chapter-body"
+        placeholder="Pega aquí el contenido: explicación, pasos, conceptos clave, citas, estadísticas... todo lo que quieres que aparezca en la página."></textarea>
+      <p class="hint">💡 Puedes incluir listas, pasos numerados, frases destacadas — el prompt los organizará visualmente.</p>
+    </div>
+
+    <div style="margin-bottom: 6px;">
+      <label class="section-label">Frase o cita destacada (opcional)</label>
+      <input type="text" id="quote" placeholder="Ej: «La calma no es ausencia de caos, es tu respuesta ante él»" />
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🎨 Diseño de la Página</h3>
+
+    <div style="margin-bottom: 18px;">
+      <label class="section-label">Paleta de colores</label>
+      <div class="tag-row" id="palette-options">
+        <span class="pill active" onclick="togglePill(this,'palette')">✨ Azul serenidad</span>
+        <span class="pill" onclick="togglePill(this,'palette')">🌿 Verde calma</span>
+        <span class="pill" onclick="togglePill(this,'palette')">🔥 Amber cálido</span>
+        <span class="pill" onclick="togglePill(this,'palette')">💕 Rosa suave</span>
+        <span class="pill" onclick="togglePill(this,'palette')">🖤 Negro editorial</span>
+        <span class="pill" onclick="togglePill(this,'palette')">⚪ Blanco minimalista</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 18px;">
+      <label class="section-label">Estilo visual</label>
+      <div class="tag-row" id="style-options">
+        <span class="pill active" onclick="togglePill(this,'style')">Moderno y limpio</span>
+        <span class="pill" onclick="togglePill(this,'style')">Ilustrado / acuarela</span>
+        <span class="pill" onclick="togglePill(this,'style')">Minimalista</span>
+        <span class="pill" onclick="togglePill(this,'style')">Orgánico / natural</span>
+        <span class="pill" onclick="togglePill(this,'style')">Bold / impactante</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 18px;">
+      <label class="section-label">Elementos visuales a incluir</label>
+      <div class="tag-row" id="elements-options">
+        <span class="pill active" onclick="togglePill(this,'elements')">Imagen ilustrativa central</span>
+        <span class="pill active" onclick="togglePill(this,'elements')">Frase destacada en caja</span>
+        <span class="pill active" onclick="togglePill(this,'elements')">Iconos por sección</span>
+        <span class="pill" onclick="togglePill(this,'elements')">Pasos numerados visuales</span>
+        <span class="pill" onclick="togglePill(this,'elements')">Barra de progreso del eBook</span>
+        <span class="pill" onclick="togglePill(this,'elements')">Nota al pie / tip</span>
+        <span class="pill" onclick="togglePill(this,'elements')">Número de página</span>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 18px;">
+      <div>
+        <label class="section-label">Formato de página</label>
+        <select id="format">
+          <option value="A4 vertical (210x297mm)">A4 vertical (estándar eBook)</option>
+          <option value="US Letter vertical (216x279mm)">US Letter vertical</option>
+          <option value="cuadrado 1:1 (2000x2000px)">Cuadrado 1:1 (redes)</option>
+          <option value="16:9 horizontal (presentación)">16:9 horizontal (slides)</option>
+        </select>
+      </div>
+      <div>
+        <label class="section-label">Número de páginas</label>
+        <input type="number" id="pages" min="1" max="999" value="1" placeholder="Ej: 4, 5, 10..." />
+      </div>
+    </div>
+
+    <div style="margin-bottom: 6px;">
+      <label class="section-label">Herramienta destino</label>
+      <select id="tool">
+        <option value="Claude (Anthropic)">Claude — genera el HTML directamente</option>
+        <option value="ChatGPT-4o">ChatGPT-4o</option>
+        <option value="Gemini Advanced">Gemini Advanced</option>
+        <option value="Midjourney v6">Midjourney v6 (imagen IA)</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="generatePrompt()">🚀 Generar Prompt Técnico</button>
+
+  <div class="output-box" id="output-box" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <div style="display:flex; gap:10px; align-items:center;">
+        <span style="font-size:14px; font-weight:600; color:var(--text-primary);">Prompt Generado</span>
+        <span class="badge badge-green" id="tool-badge">Claude</span>
+      </div>
+      <button class="btn-copy" onclick="copyPrompt()">📋 Copiar</button>
+    </div>
+    <div class="copied-msg" id="copied-msg">✓ Copiado al portapapeles</div>
+    <div class="output-text" id="output-text"></div>
+    <hr class="divider">
+    <div id="how-to-use"></div>
+  </div>
+
+</div>
+
+<script>
+  const pillState = { palette: 'Azul serenidad', style: 'Moderno y limpio', elements: ['Imagen ilustrativa central', 'Frase destacada en caja', 'Iconos por sección'] };
+
+  function togglePill(el, group) {
+    if (group === 'elements') {
+      el.classList.toggle('active');
+      const active = [...document.querySelectorAll('#elements-options .pill.active')].map(p => p.textContent);
+      pillState.elements = active;
+    } else {
+      document.querySelectorAll('#' + group + '-options .pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      pillState[group] = el.textContent;
+    }
+  }
+
+  function generatePrompt() {
+    const title = document.getElementById('chapter-title').value.trim() || '[Título del capítulo]';
+    const ebook = document.getElementById('ebook-title').value.trim() || '[Nombre del ebook]';
+    const body = document.getElementById('chapter-body').value.trim() || '[Contenido del capítulo]';
+    const quote = document.getElementById('quote').value.trim();
+    const format = document.getElementById('format').value;
+    const pagesNum = document.getElementById('pages').value || '1';
+    const pageText = pagesNum === '1' ? '1 página completa' : `${pagesNum} páginas consecutivas`;
+    const tool = document.getElementById('tool').value;
+    const palette = pillState.palette;
+    const style = pillState.style;
+    const elements = pillState.elements.length > 0 ? pillState.elements.join(', ') : 'imagen ilustrativa, frase destacada';
+
+    const paletteMap = {
+      'Azul serenidad': 'deep indigo (#1A237E), soft sky blue (#90CAF9), white (#FFFFFF), light blue-gray (#E3F2FD)',
+      'Verde calma': 'forest green (#1B5E20), sage (#A5D6A7), cream white (#FAFDF5), mint accent (#E8F5E9)',
+      'Amber cálido': 'deep amber (#E65100), warm gold (#FFB300), off-white (#FFFDE7), burnt sienna accent (#BF360C)',
+      'Rosa suave': 'dusty rose (#AD1457), blush pink (#F8BBD0), warm white (#FFF8F9), mauve accent (#E91E63)',
+      'Negro editorial': 'rich black (#0D0D0D), charcoal (#212121), white (#FFFFFF), gold accent (#FFD600)',
+      'Blanco minimalista': 'pure white (#FFFFFF), light gray (#F5F5F5), dark gray text (#212121), thin black borders'
+    };
+
+    const styleMap = {
+      'Moderno y limpio': 'modern editorial design, clean geometric shapes, sharp typography, structured grid layout, professional and polished',
+      'Ilustrado / acuarela': 'watercolor illustration style, soft organic shapes, hand-painted textures, gentle brushstroke decorative elements, warm and approachable',
+      'Minimalista': 'ultra-minimalist design, maximum white space, single accent color, thin lines, elegant simplicity — less is more',
+      'Orgánico / natural': 'nature-inspired organic shapes, botanical illustration elements, flowing curves, earthy textures, calming and grounded',
+      'Bold / impactante': 'bold typography-forward design, high contrast, large graphic elements, strong visual hierarchy, powerful and memorable'
+    };
+
+    const isMidjourney = tool.includes('Midjourney');
+    const isClaude = tool.includes('Claude');
+
+    let prompt = '';
+
+    if (isClaude) {
+      prompt = `Actúa como un diseñador editorial experto en ebooks de alto impacto visual.
+
+TAREA: Genera el código HTML completo de ${pageText} del ebook "${ebook}", específicamente para el capítulo: "${title}".
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONTENIDO DEL CAPÍTULO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${body}
+${quote ? `\nFRASE DESTACADA PARA CAJA VISUAL: "${quote}"` : ''}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ESPECIFICACIONES TÉCNICAS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Formato: ${format} — la página debe ser exactamente ese tamaño, con proporciones correctas usando CSS (width/height fijos o aspect-ratio)
+• Resolución objetivo: apta para exportar a PDF o imagen @2x
+• Fuentes: usa Google Fonts — importa en el <head> fuentes elegantes (ej: Playfair Display para títulos + Lato o Source Serif 4 para cuerpo)
+• Paleta de color: ${paletteMap[palette] || palette}
+• Estilo visual: ${styleMap[style] || style}
+• Elementos visuales a incluir: ${elements}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REGLAS DE DISEÑO OBLIGATORIAS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. JERARQUÍA VISUAL: título del capítulo dominante → texto organizado en secciones → cita/frase → ilustración/icono
+2. LEGIBILIDAD 100%: tamaño mínimo de texto de cuerpo 14px, contraste alto siempre
+3. MÁRGENES: 32px mínimo en todos los lados — nada cortado en los bordes
+4. ILUSTRACIÓN: usa SVG inline o emojis grandes (80-120px) como imagen alusiva al tema. La ilustración debe ser contextualmente relevante al contenido
+5. Si hay pasos o listas, renderízalos como tarjetas numeradas visuales, no como bullets planos
+6. CAJA DE FRASE DESTACADA: si hay cita, crea un bloque visual prominente con fondo de color de acento, texto grande y centrado
+7. FOOTER de página: incluye el nombre del ebook "${ebook}" en pequeño y número de página
+8. El HTML debe ser autónomo — todo el CSS inline o en <style> en el mismo archivo, sin dependencias externas excepto Google Fonts
+
+ENTREGA: El código HTML completo, listo para abrir en navegador y tomar captura de pantalla para exportar.`;
+
+    } else if (isMidjourney) {
+      prompt = `Professional ebook page design, full ${format} layout, chapter title: "${title}", book: "${ebook}", 
+
+Content to visualize: ${body.substring(0, 200)}${body.length > 200 ? '...' : ''}
+${quote ? `Featured quote displayed in decorative box: "${quote.substring(0, 80)}"` : ''}
+
+Visual style: ${styleMap[style] || style}
+Color palette: ${paletteMap[palette] || palette}
+Include: ${elements}
+
+Typography: professional serif title font + clean sans-serif body, perfect legibility, structured grid layout, editorial book page, all text clearly readable, magazine-quality design, print-ready, no watermarks, full page composition with proper margins --ar ${format.includes('cuadrado') ? '1:1' : format.includes('16:9') ? '16:9' : '7:10'} --style raw --v 6.1`;
+
+    } else {
+      prompt = `Actúa como un diseñador editorial profesional especializado en ebooks visuales de alto impacto.
+
+TAREA: Diseña y describe en detalle, o genera el código completo (HTML/CSS), de ${pageText} de ebook con la siguiente información:
+
+LIBRO: "${ebook}"
+CAPÍTULO: "${title}"
+
+━━━ CONTENIDO A DIAGRAMAR ━━━
+${body}
+${quote ? `\nFRASE DESTACADA: "${quote}"` : ''}
+
+━━━ ESPECIFICACIONES VISUALES ━━━
+Formato: ${format}
+Paleta de colores: ${paletteMap[palette] || palette}
+Estilo: ${styleMap[style] || style}
+Elementos visuales requeridos: ${elements}
+
+━━━ INSTRUCCIONES DE DISEÑO ━━━
+• Organiza el contenido con jerarquía visual clara: título grande → secciones con iconos → cuerpo de texto → cita visual destacada
+• Usa tipografía serif para títulos y sans-serif para cuerpo
+• Aplica la paleta indicada de forma coherente: fondo, texto, acentos, cajas
+• Incluye una ilustración SVG o elemento gráfico alusivo al tema del capítulo
+• Si hay pasos o listas, renderízalos como tarjetas o bloques visuales numerados
+• Crea una caja visual destacada para la frase clave
+• Agrega footer con nombre del ebook y número de página
+• Todo el texto debe ser 100% legible con contraste adecuado
+• Márgenes mínimos de 30px en todos los bordes
+
+RESULTADO ESPERADO: Código HTML/CSS completo, autónomo, listo para exportar como imagen o PDF.`;
+    }
+
+    document.getElementById('output-text').textContent = prompt;
+    document.getElementById('tool-badge').textContent = tool;
+    document.getElementById('output-box').style.display = 'block';
+
+    const howTo = document.getElementById('how-to-use');
+    let instructions = '';
+
+    if (isClaude) {
+      instructions = `<p style="font-size:13px; font-weight:500; margin-bottom:10px;">Cómo usar este prompt:</p>
+    <div class="step-row"><span class="step-num">1</span><span style="font-size:13px; color:var(--color-text-secondary);">Copia el prompt y pégalo en una nueva conversación con Claude</span></div>
+    <div class="step-row"><span class="step-num">2</span><span style="font-size:13px; color:var(--color-text-secondary);">Claude generará el código HTML completo — cópialo y guárdalo como <code style="font-size:11px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;">pagina.html</code></span></div>
+    <div class="step-row"><span class="step-num">3</span><span style="font-size:13px; color:var(--color-text-secondary);">Abre el archivo en Chrome, usa Ctrl+P → "Guardar como PDF" → A4, sin márgenes</span></div>`;
+    } else if (isMidjourney) {
+      instructions = `<p style="font-size:13px; font-weight:500; margin-bottom:10px;">Cómo usar en Midjourney:</p>
+    <div class="step-row"><span class="step-num">1</span><span style="font-size:13px; color:var(--color-text-secondary);">Pega el prompt en Discord con el comando <code style="font-size:11px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;">/imagine</code></span></div>
+    <div class="step-row"><span class="step-num">2</span><span style="font-size:13px; color:var(--color-text-secondary);">Nota: Midjourney no renderiza texto perfectamente — usa el resultado como fondo y agrega el texto en Canva</span></div>`;
+    } else {
+      instructions = `<p style="font-size:13px; font-weight:500; margin-bottom:10px;">Cómo usar este prompt:</p>
+    <div class="step-row"><span class="step-num">1</span><span style="font-size:13px; color:var(--color-text-secondary);">Copia el prompt y pégalo directamente en ${tool}</span></div>
+    <div class="step-row"><span class="step-num">2</span><span style="font-size:13px; color:var(--color-text-secondary);">Pide que genere el código HTML completo de la página</span></div>
+    <div class="step-row"><span class="step-num">3</span><span style="font-size:13px; color:var(--color-text-secondary);">Guarda como .html y exporta a PDF desde el navegador</span></div>`;
+    }
+
+    howTo.innerHTML = instructions;
+
+    setTimeout(() => {
+      document.getElementById('output-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  function copyPrompt() {
+    const text = document.getElementById('output-text').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const msg = document.getElementById('copied-msg');
+      msg.classList.add('show');
+      setTimeout(() => msg.classList.remove('show'), 2000);
+    });
+  }
+</script>
